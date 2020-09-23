@@ -2,27 +2,64 @@
 # Arguments: string, integer
 # Returns: string
 def encrypt_caesar(plaintext, offset):
+    plaintext = plaintext.upper()
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     result = " "
     
     for i in plaintext:
-      if char == ' '
-        result = result + char  
-      elif char.isupper():
-        result = result + chr((ord(char) + offset - 65) % 26 + 65
+      if i in alphabet:
+        i_index = (alphabet.find(letter) + offset) % len(alphabet)
+        result = result + alphabet[i_index]  
       else:
-        result = result + chr((ord(char) + offset - 97) % 26 + 97    
-      return result
+        result = result + i    
+    return result
 
 # Arguments: string, integer
 # Returns: string
 def decrypt_caesar(ciphertext, offset):
-    pass
+    ciphertext = ciphertext.upper()
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result = " "
+                              
+    for letter in ciphertext:
+        if letter in alphabet:
+            letter_index = (alphabet.find(letter) - offest) % len(alphabet)
+            result = result + alphabet[letter_index]
+        else:
+            result = result + letter
+    return result
 
 # Vigenere Cipher
 # Arguments: string, string
 # Returns: string
 def encrypt_vigenere(plaintext, keyword):
-    pass
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result = " "
+    
+    plaintext_length = len(plaintext)
+    exp_keyword = keyword
+    exp_keywordLength = len(exp_keyword)
+    
+    while exp_keywordLength < plaintext_length:
+        exp_keyword += keyword
+        exp_keywordLength = len(exp_keyword)
+       
+    keywordPosition = 0
+    
+    for letter in plaintext:
+        if letter in alphabet:
+            letter_index = alphabet.find(letter)
+            keyword_char = exp_keyword[keywordPosition]
+            keyword_char_index = alphabet.find(keyword_char)
+            keywordPosition += 1
+            newIndex = letter_index + keyword_char_index
+            if newIndex > 26:
+                newIndex = newIndex - 26
+            new_char = alphabet[newIndex]
+            result += letter
+        else: 
+            result += letter
+    return result
 
 # Arguments: string, string
 # Returns: string
@@ -56,4 +93,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
