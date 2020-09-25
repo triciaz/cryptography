@@ -64,31 +64,73 @@ def encrypt_vigenere(plaintext, keyword):
 # Arguments: string, string
 # Returns: string
 def decrypt_vigenere(ciphertext, keyword):
-    pass
+       alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+       result = " "
 
-# Merkle-Hellman Knapsack Cryptosystem
+       ciphertext_length = len(ciphertext)
+
+       exp_keyword = keyword
+       exp_keywordLength = len(exp_keyword)
+
+       while exp_keywordLength < ciphertext_length:
+            exp_keyword = exp_keyword + keyword
+            exp_keywordLength = len(exp_keyword)
+
+       keyword_position = 0
+
+       for letter in ciphertext:
+            if letter in alphabet:
+                index = alphabet.find(letter)
+                keyword_char = exp_keyword[keyword_position]
+                keyword_char_index = alphabet.find(keyword_char)
+                keyword_position = keyword_position + 1
+                new_index = index - keyword_char_index
+                if new_index > 26:
+                    new_index = new_index + 26
+                new_char = alphabet[new_index]
+                result = result + new_char
+            else:
+                result = result + letter
+        return result
+
+#  Merkle-Hellman Knapsack Cryptosystem
 # Arguments: integer
 # Returns: tuple (W, Q, R) - W a length-n tuple of integers, Q and R both integers
 def generate_private_key(n=8):
-    pass
+    w = [1]
+    z = 1
+    for i in range(n):
+        total = sum(w[:])
+        z = random.randint(total + 1, 2 * total)
+        w.append(z)
+    assert utils.is_superincreasing(w) == True
+    w = tuple(w)
+
+    total = sum(w[:])
+    q = random.randint(total + 1, 2 * total)
+
+    for i in range(2, q-1):
+        if utils.coprime(i, q) == True:
+            r = i
+            break
+    return (w, q, r)
 
 # Arguments: tuple (W, Q, R) - W a length-n tuple of integers, Q and R both integers
-# Returns: tuple B - a length-n tuple of integers
+# Returns: B - a length-n tuple of integers
 def create_public_key(private_key):
-    pass
+    B = ()
+    for i in range n:
+        B.append((r * w[i]) % q)
+    return B
 
-# Arguments: string, tuple (W, Q, R)
+# Arguments: string, tuple B
 # Returns: list of integers
 def encrypt_mhkc(plaintext, public_key):
     pass
 
-# Arguments: list of integers, tuple B - a length-n tuple of integers
+# Arguments: list of integers, private key (W, Q, R) with W a tuple.
 # Returns: bytearray or str of plaintext
 def decrypt_mhkc(ciphertext, private_key):
-    pass
-
-def main():
-    # Testing code here
     pass
 
 if __name__ == "__main__":
